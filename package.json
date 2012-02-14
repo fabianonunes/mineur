@@ -1,0 +1,15 @@
+{
+	"name": "miniur"
+	, "version": "0.0.1"
+	, "keywords": []
+	, "author": "Fabiano Nunes <@fab_tc>"
+	, "dependencies": {
+		"express": "*",
+		"NewBase60" : "*",
+		"hiredis" : "*",
+		"redis" : "*",
+		"q" : "*"
+	}
+	, "main": "index"
+	, "engines": { "node": "0.6.x" }
+}
