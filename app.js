@@ -10,14 +10,25 @@ app.configure(function(){
 	app.use(express['static'](__dirname + '/public'))
 })
 
-app.post('/api', function(req, res) {
-	mineur.short(req.body.url).then(res.send.bind(res))
+app.get('/', function(req, res, next){
+	res.send('MINEur', 200)
 })
 
-app.get('/:hash', function(req, res){
+app.post('/api', function(req, res, next) {
+	mineur.short(req.body.url).then(
+		res.send.bind(res)
+	).fail(next)
+})
+
+app.get('/:hash', function(req, res, next){
 	mineur.redirect(req.params.hash).then(function (url) {
-		res.redirect(url || '/')
-	})
+		if (url) { res.redirect(url) }
+		else { res.send('not found', 404) }
+	}).fail(next)
+})
+
+app.error(function(err, req, res, next){
+	res.send(err.message, err.code || 500)
 })
 
 app.listen(3030)

@@ -1,6 +1,6 @@
 {
 	"name": "miniur"
-	, "version": "0.0.1"
+	, "version": "1.0.0"
 	, "keywords": []
 	, "author": "Fabiano Nunes <@fab_tc>"
 	, "dependencies": {
@@ -8,7 +8,8 @@
 		"NewBase60" : "*",
 		"hiredis" : "*",
 		"redis" : "*",
-		"q" : "*"
+		"q" : "*",
+		"validator" : "*"
 	}
 	, "main": "index"
 	, "engines": { "node": "0.6.x" }
