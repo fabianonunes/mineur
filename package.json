@@ -8,7 +8,8 @@
 		"NewBase60" : "*",
 		"hiredis" : "*",
 		"redis" : "*",
-		"q" : "*"
+		"q" : "*",
+		"validator" : "*"
 	}
 	, "main": "index"
 	, "engines": { "node": "0.6.x" }
