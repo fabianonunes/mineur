@@ -1,0 +1,11 @@
+check process MINEur with pidfile "/var/run/mineur.pid"
+    start program = "/sbin/start mineur"
+    stop program = "/sbin/stop mineur"
+    if 2 restarts within 3 cycles then timeout
+    if totalmem > 100 Mb then alert
+    if children > 255 for 5 cycles then stop
+    if cpu usage > 95% for 3 cycles then restart
+    if failed port 3030 protocol http
+	request /
+	with timeout 5 seconds
+    then restart
