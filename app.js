@@ -10,8 +10,8 @@ server.use(restify.dateParser())
 server.use(restify.queryParser({ mapParams: false }))
 server.use(restify.bodyParser({ mapParams: false }))
 server.use(restify.throttle({
-	burst: 5,
-	rate: 5,
+	burst: 50,
+	rate: 50,
 	ip: true
 }))
 
