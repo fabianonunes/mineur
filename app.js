@@ -1,34 +1,35 @@
 
-var express = require('express'),
-	mineur = require('./lib/mineur')
+var mineur = require('./lib/mineur'),
+	restify = require('restify')
 
-var app = express.createServer()
+var server = restify.createServer()
 
-app.configure(function(){
-	app.use(express.bodyParser())
-	app.use(app.router)
-	app.use(express['static'](__dirname + '/public'))
-})
+server.use(restify.acceptParser(server.acceptable))
+server.use(restify.authorizationParser())
+server.use(restify.dateParser())
+server.use(restify.queryParser({ mapParams: false }))
+server.use(restify.bodyParser({ mapParams: false }))
+server.use(restify.throttle({
+	burst: 50,
+	rate: 50,
+	ip: true
+}))
 
-app.get('/', function(req, res, next){
-	res.send('MINEur', 200)
-})
-
-app.post('/api', function(req, res, next) {
-	mineur.short(req.body.url).then(
+server.post('/api', function(req, res, next) {
+	mineur.short(req.body.url, req.body.expire).then(
 		res.send.bind(res)
 	).fail(next)
 })
 
-app.get('/:hash', function(req, res, next){
+server.get('/:hash', function(req, res, next){
 	mineur.redirect(req.params.hash).then(function (url) {
-		if (url) { res.redirect(url) }
-		else { res.send('not found', 404) }
+		if (url) {
+			res.header('Location', url)
+			res.send(302, { url : url, hash : req.params.hash })
+		} else {
+			throw new restify.ResourceNotFoundError('hash not found')
+		}
 	}).fail(next)
 })
 
-app.error(function(err, req, res, next){
-	res.send(err.message, err.code || 500)
-})
-
-app.listen(3030)
+server.listen(3030)
