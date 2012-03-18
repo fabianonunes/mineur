@@ -16,7 +16,7 @@ server.use(restify.throttle({
 }))
 
 server.post('/api', function(req, res, next) {
-	mineur.short(req.body.url).then(
+	mineur.short(req.body.url, req.body.expire).then(
 		res.send.bind(res)
 	).fail(next)
 })
