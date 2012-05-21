@@ -1,6 +1,7 @@
 
 var mineur = require('./lib/mineur'),
-	restify = require('restify')
+	restify = require('restify'),
+	request = request('request')
 
 var server = restify.createServer()
 
@@ -21,6 +22,10 @@ server.post('/api', function(req, res, next) {
 	).fail(next)
 })
 
+server.get('/bridge', function(req, res, next){
+	request.get(req.body.url).pipe(res)
+})
+
 server.get('/:hash', function(req, res, next){
 	mineur.redirect(req.params.hash).then(function (url) {
 		if (url) {
@@ -31,5 +36,6 @@ server.get('/:hash', function(req, res, next){
 		}
 	}).fail(next)
 })
+
 
 server.listen(3030)
