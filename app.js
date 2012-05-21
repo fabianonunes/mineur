@@ -1,7 +1,7 @@
 
 var mineur = require('./lib/mineur'),
 	restify = require('restify'),
-	request = request('request')
+	request = require('request')
 
 var server = restify.createServer()
 
