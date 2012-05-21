@@ -23,6 +23,7 @@ server.post('/api', function(req, res, next) {
 })
 
 server.get('/bridge', function(req, res, next){
+	console.log(req.body.url)
 	request.get(req.body.url).pipe(res)
 })
 
