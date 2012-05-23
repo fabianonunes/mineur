@@ -10,7 +10,10 @@
 		"redis" : "*",
 		"q" : "*",
 		"validator" : "*",
-		"restify" : "*"
+		"restify" : "*",
+		"request" : "*",
+		"underscore" : "*",
+		"speakeasy" : "*"
 	}
 	, "main": "index"
 	, "engines": { "node": "0.6.x" }

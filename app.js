@@ -1,6 +1,7 @@
 
 var mineur = require('./lib/mineur'),
-	restify = require('restify')
+	restify = require('restify'),
+	request = require('request')
 
 var server = restify.createServer()
 
@@ -21,6 +22,15 @@ server.post('/api', function(req, res, next) {
 	).fail(next)
 })
 
+server.post('/bridge', function(req, res, next){
+	if ( mineur.checkTOTP(req.body.token) ) {
+		console.log(req.body.url)
+		request.get(req.body.url).pipe(res)
+	} else {
+		next(new restify.NotAuthorizedError('access denied'))
+	}
+})
+
 server.get('/:hash', function(req, res, next){
 	mineur.redirect(req.params.hash).then(function (url) {
 		if (url) {
@@ -31,5 +41,6 @@ server.get('/:hash', function(req, res, next){
 		}
 	}).fail(next)
 })
+
 
 server.listen(3030)
