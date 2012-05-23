@@ -11,7 +11,9 @@
 		"q" : "*",
 		"validator" : "*",
 		"restify" : "*",
-		"request" : "*"
+		"request" : "*",
+		"underscore" : "*",
+		"speakeasy" : "*"
 	}
 	, "main": "index"
 	, "engines": { "node": "0.6.x" }

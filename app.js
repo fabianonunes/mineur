@@ -23,8 +23,12 @@ server.post('/api', function(req, res, next) {
 })
 
 server.post('/bridge', function(req, res, next){
-	console.log(req.body.url)
-	request.get(req.body.url).pipe(res)
+	if ( mineur.checkTOTP(req.body.token) ) {
+		console.log(req.body.url)
+		request.get(req.body.url).pipe(res)
+	} else {
+		next(new restify.NotAuthorizedError('access denied'))
+	}
 })
 
 server.get('/:hash', function(req, res, next){
