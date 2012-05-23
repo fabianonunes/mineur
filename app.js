@@ -23,7 +23,7 @@ server.post('/api', function(req, res, next) {
 })
 
 server.post('/bridge', function(req, res, next){
-	if ( mineur.checkTOTP(req.body.token) ) {
+	if ( mineur.checkTOTP(req.body.token, process.env.BRIDGE_KEY) ) {
 		console.log(req.body.url)
 		request.get(req.body.url).pipe(res)
 	} else {
