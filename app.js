@@ -33,13 +33,11 @@ server.post('/bridge', function(req, res, next){
 
 server.get('/:hash', function(req, res, next){
 	mineur.redirect(req.params.hash).then(function (url) {
-		if (url) {
-			res.header('Location', url)
-			res.send(302, { url : url, hash : req.params.hash })
-		} else {
-			throw new restify.ResourceNotFoundError('hash not found')
-		}
-	}).fail(next)
+		res.header('Location', url)
+		res.send(302, { url : url, hash : req.params.hash })
+	}).fail(function () {
+		next(new restify.ResourceNotFoundError('hash not found'))
+	})
 })
 
 
